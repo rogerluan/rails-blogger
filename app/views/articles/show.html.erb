@@ -1,3 +1,24 @@
 <h1><%= @article.title %></h1>
+
+<% if @article.average_reading_time < 1 %>
+<h6>Average reading time: less than a minute</h6>
+<% elsif @article.average_reading_time == 1 %>
+<h6>Average reading time: one minute</h6>
+<% else %>
+<h6>Average reading time: <%= @article.average_reading_time %> minutes</h6>
+<% end %>
+
 <p><%= @article.body %></p>
-<%= link_to "<< Back to Articles List", articles_path %>
+
+<ul>
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= link_to "Destroy", article_path(@article),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>
+
+<h2>Comments</h2>
+<%= render @article.comments %>
+
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
